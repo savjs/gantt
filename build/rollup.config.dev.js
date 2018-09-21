@@ -1,9 +1,10 @@
 import serve from 'rollup-plugin-serve'
 import baseConfig from './rollup.config.base'
 
-export default {
+export default Object.assign(baseConfig, {
   input: 'demo/main.js',
   output: {
+    ...baseConfig.output,
     format: 'iife',
     file: 'dist/main.js'
   },
@@ -14,4 +15,4 @@ export default {
       contentBase: ['dist', 'demo', '']
     })
   ]
-}
+})

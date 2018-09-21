@@ -1,5 +1,5 @@
 <template>
-  <div>{{hello}}</div>
+  <div class="gantt">{{hello}}</div>
 </template>
 
 <script>
@@ -12,3 +12,8 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .gantt {
+    color: #ccc;
+  }
+</style>

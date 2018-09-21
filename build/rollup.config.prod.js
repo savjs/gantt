@@ -1,6 +1,6 @@
 import baseConfig from './rollup.config.base'
 
-export default {
+export default Object.assign(baseConfig, {
   input: 'demo/main.js',
   output: {
     format: 'es',
@@ -9,4 +9,4 @@ export default {
   plugins: [
     ...baseConfig.plugins
   ]
-}
+})
