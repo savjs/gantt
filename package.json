@@ -1,0 +1,34 @@
+{
+  "name": "gantt",
+  "version": "0.1.0",
+  "description": "Vue Gantt Chart Component",
+  "main": "dist/gantt.esm.js",
+  "module": "dist/gantt.esm.js",
+  "scripts": {
+    "dev": "rollup -w -c build/rollup.config.dev.js",
+    "build": "rollup -c build/rollup.config.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/savjs/gantt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/savjs/gantt/issues"
+  },
+  "homepage": "https://github.com/savjs/gantt#readme",
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.3",
+    "rollup": "^0.66.1",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-serve": "^0.6.0",
+    "rollup-plugin-vue": "^4.3.2",
+    "vue-template-compiler": "^2.5.17"
+  }
+}
