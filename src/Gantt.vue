@@ -9,8 +9,9 @@
       </tr>
       <tr v-for="(items,indexs) in opt" :key='indexs'>
         <td v-for="(item, index) in newDate" :key='index'>
+          <a class='isActive' v-if="item.day==isActive">dscds</a>
           <span v-if="index=='0'" >{{items.title}}</span>
-          <span v-else :data-x='item.day' :data-y='indexs+1'><a :style="{ background: item.hh.activeColor,width: item.hh.width}" :data='item.hh.remark' @mouseenter="mouseenter" @mouseleave="mouseleave" v-if="item.day==item.hh.today&&item.hh.y==indexs"  class="iniClass">{{item.hh.title}} {{item.hh.sum}} %</a><a :data='item.hh.remark' v-if="item.day==item.hh.today&&item.hh.y==indexs" @mouseenter="mouseenter" @mouseleave="mouseleave" class="iniClassB" :style="{ background: item.hh.activeColors,width: item.hh.widths}">''</a></span>
+          <span v-else :data-x='item.day' :data-y='indexs+1'><a :style="{ background: item.hh.activeColor,width: item.hh.width}" :data='item.hh.remark' @mouseenter="mouseenter" @mouseleave="mouseleave" v-if="item.day===item.hh.today&&item.hh.y===indexs"  class="iniClass">{{item.hh.title}} {{item.hh.sum}} %</a><a :data='item.hh.remark' v-if="item.day===item.hh.today&&item.hh.y===indexs" @mouseenter="mouseenter" @mouseleave="mouseleave" class="iniClassB" :style="{ background: item.hh.activeColors,width: item.hh.widths}">''</a></span>
         </td>
       </tr>
     </table>
@@ -26,7 +27,7 @@ export default {
       opt: [
         {
           title: '项目一',
-          today: '2018-9-2',
+          today: '2018-9-1',
           endTime: '2018-9-9',
           activeColor: 'red',
           activeColors: 'green',
@@ -34,7 +35,7 @@ export default {
         },
         {
           title: '项目二',
-          today: '2018-9-3',
+          today: '2018-9-2',
            endTime: '2018-9-9',
           activeColor: 'red',
           activeColors: 'green',
@@ -42,20 +43,78 @@ export default {
         },
         {
           title: '项目三',
-          today: '2018-9-7',
+          today: '2018-9-3',
            endTime: '2018-9-9',
           activeColor: 'red',
           activeColors: 'green',
            remark : '这是项目三'
+        },
+        {
+          title: '项目四',
+          today: '2018-9-4',
+           endTime: '2018-9-10',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目四'
+        },
+         {
+          title: '项目五',
+          today: '2018-9-5',
+           endTime: '2018-9-15',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目五'
+        },
+         {
+          title: '项目六',
+          today: '2018-9-6',
+           endTime: '2018-9-15',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目六'
+        },
+        {
+          title: '项目七',
+          today: '2018-9-7',
+           endTime: '2018-9-15',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目七'
+        },
+         {
+          title: '项目八',
+          today: '2018-9-12',
+           endTime: '2018-9-18',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目八'
+        },
+        {
+          title: '项目九',
+          today: '2018-9-9',
+           endTime: '2018-9-29',
+          activeColor: 'red',
+          activeColors: 'green',
+           remark : '这是项目九'
+        },
+         {
+          title: '项目十',
+          today: '2018-9-8',
+          endTime: '2018-9-15',
+          activeColor: 'red',
+          activeColors: 'green',
+          remark : '这是项目十'
         }
       ],
+      opts: [],
       date: [],
       dates: [],
       newDate: [],
       isshow: false,
       top: '0',
       left: '0',
-      remark: ''
+      remark: '',
+      isActive:new Date().getFullYear() + `${'-'}` + parseInt(new Date().getMonth() + 1) + `${'-'}` + new Date().getDate()
 
     }
   },
@@ -70,18 +129,19 @@ export default {
       let days =
       this.mGetDate(new Date().getFullYear(), new Date().getMonth()) + 1
       for (let index = 0; index < days; index++) {
-        this.date.push({
+       this.date.push({
           day: new Date().getFullYear() + `${'-'}` + parseInt(new Date().getMonth() + 1) + `${'-'}` + parseInt(index),
           hh: {}
         })
       }
       this.date.map((item, indexs) => {
-        this.dates.push({ ...item, hh: this.opt[indexs] || { today: '' } })
+        this.dates.push({ ...item,hh: this.opt[indexs] || { today: '' } })
       })
       this.dates.map((items, indexs) => {
         let hh = {}
         this.dates.map((itemss, indexss) => {
           if (items.day === itemss.hh.today) {
+            console.log(items.day,itemss.hh.today)
             let datediff=this.DateDiff(itemss.hh.today,itemss.hh.endTime).percent
             let sum=this.DateDiff(itemss.hh.today,itemss.hh.endTime).sum/86400
             let nowSum=this.DateDiff(itemss.hh.today,itemss.hh.endTime).nowSum/86400
@@ -226,5 +286,10 @@ h1 {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 10px solid #fff;
+}
+
+.isActive{
+  
+  background-color: red;
 }
 </style>
