@@ -11,7 +11,7 @@ export default Object.assign(baseConfig, {
   plugins: [
     ...baseConfig.plugins,
     serve({
-      port: 8080,
+      port: 8082,
       contentBase: ['dist', 'demo', '']
     })
   ]
