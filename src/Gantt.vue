@@ -386,13 +386,12 @@ h1 {
   padding: 15px 0;
 }
 .month{
-  width: 115px;
-  padding: 15px 0;
-  display: inline-block;
-  cursor: pointer
+    display: inline-block;
+    width: 115px;
+    cursor: pointer;
 }
 .top{
+  text-align: right;
   border-top: 1px solid #00000029;
-  /* border: 1px solid #00000029; */
 }
 </style>
