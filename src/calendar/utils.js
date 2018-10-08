@@ -1,3 +1,6 @@
+const monthOlypic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] //闰年每个月份的天数
+const monthNormal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] //非闰年
+
 // 获取当天的年月日
 export function getCurrentDay () {
   const currentDay = new Date()
@@ -17,9 +20,9 @@ export function daysMonth (month, year) {
   var tmp3 = year % 400;
 
   if ((tmp1 == 0 && tmp2 != 0) || (tmp3 == 0)) {
-    return (month_olypic[month]) //闰年
+    return (monthOlypic[month]) //闰年
   } else {
-    return (month_normal[month]) //非闰年
+    return (monthNormal[month]) //非闰年
   }
 }
 

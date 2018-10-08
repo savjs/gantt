@@ -6,13 +6,29 @@
 
 <template>
   <div class="calendar">
-    <div class="calendar-header">
-      <h1 class="green" id="calendar-title">{{monthName[currentDay.currentDay_month]}}</h1>
-      <h2 class="green" id="calendar-year">{{currentDay.currentDay_year}}</h2>
-      <a href="" id="pre"></a>
-      <a href="" id="next"></a>
+    <div class="title">
+      <h1 class="green" id="calendar-title"> {{currentDay.currentDay_year}} - {{monthName[currentDay.currentDay_month]}}</h1>
+      <h2 class="green" id="calendar-year"></h2>
+      <div id="pre" @click="pre"></div>
+      <div id="next" @click="next"></div>
     </div>
-    <div class="calendar-title"></div>
+
+    <div class="body">
+      <!-- <div class="lightgrey body-list">
+        <ul>
+          <li>星期天</li>
+          <li>星期一</li>
+          <li>星期二</li>
+          <li>星期三</li>
+          <li>星期四</li>
+          <li>星期五</li>
+          <li>星期六</li>
+        </ul>
+      </div> -->
+      <div class="darkgrey body-list">
+        <ul id="days" v-html="refreshDate()"></ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -20,21 +36,19 @@ import * as CALENDAR_UTIL from './utils.js'
 export default {
   data() {
     return {
-      monthOlypic: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], //闰年每个月份的天数
-      monthNormal: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], //非闰年
       monthName: [
-        "一月",
-        "二月",
-        "三月",
-        "四月",
-        "五月",
-        "六月",
-        "七月",
-        "八月",
-        "九月",
-        "十月",
-        "十一月",
-        "十二月"
+        "01月",
+        "02月",
+        "03月",
+        "04月",
+        "05月",
+        "06月",
+        "07月",
+        "08月",
+        "09月",
+        "10月",
+        "11月",
+        "12月"
       ],
       currentDay: {}
     };
@@ -42,22 +56,59 @@ export default {
   computed: {
   },
   methods: {
+    refreshDate () {
+      //获取以上各个部分的id
+      var holder = document.getElementById("days");
+
+      let {currentDay_year, currentDay_month, currentDay_day} = this.currentDay
+      let currentDay_date = new Date()
+      let str = ''
+      let totalDay = CALENDAR_UTIL.daysMonth(currentDay_month, currentDay_year)
+      let firstDay = CALENDAR_UTIL.dayStart(currentDay_month, currentDay_year)
+      for (var i = 0; i < firstDay; i++) {
+        str += "<li></li>"
+      }
+
+      let myClass
+      for (let i = 1; i <= totalDay; i++) {
+        if ((currentDay_year < currentDay_date.getFullYear()) || 
+        (currentDay_year === currentDay_date.getFullYear() && currentDay_month < currentDay_date.getMonth()) ||
+        (currentDay_year === currentDay_date.getFullYear() && currentDay_month === currentDay_date.getMonth() && i < currentDay_day)) {
+          myClass = "class='lightgrey'"
+        } else if (currentDay_year === currentDay_date.getFullYear() && currentDay_month === currentDay_date.getMonth() && i === currentDay_day) {
+          myClass = "class='green greenbox'"
+        } else {
+          myClass = "class='darkgrey'"
+        }
+        str += "<li " + myClass + ">" + i + "</li>"
+      }
+      return str 
+    },
+    pre () {
+      this.currentDay.currentDay_month--
+      if (this.currentDay.currentDay_month < 0) this.currentDay.currentDay_year-- && (this.currentDay.currentDay_month = 11)
+      this.refreshDate()
+    },
+    next () {
+      this.currentDay.currentDay_month++
+      if (this.currentDay.currentDay_month > 11) this.currentDay.currentDay_year++ && (this.currentDay.currentDay_month = 0)
+      this.refreshDate()
+    }
   },
   mounted () {
     this.currentDay = CALENDAR_UTIL.getCurrentDay()
+    // console.log(CALENDAR_UTIL.daysMonth(9, 2018))
   }
 };
 </script>
-<style scoped>
+<style>
 .calendar {
-  margin: 45px;
-  width: 450px;
   height: 350px;
   background: white;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.calendar-header {
+.title {
   height: 70px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
