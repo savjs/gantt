@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Gantt Demo</h2>
     <gantt></gantt>
   </div>
 </template>
