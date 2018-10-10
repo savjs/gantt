@@ -1,16 +1,21 @@
 <template>
   <div id='tableid'>
-    <div class="header">{{new Date().toJSON()}}</div>
-    <div class="top"><span class="month" v-for="(item,index) in month" :key='index' @click="switchTo(item)">{{item}}</span></div>
+    <!--<div class="header">{{new Date().toJSON()}}</div>-->
+    <!--<div class="top"><span class="month" v-for="(item,index) in month" :key='index' @click="switchTo(item)">{{item}}</span></div>-->
+
     <table class="hello" >
       <tr>
-        <th>
-          <span >kk</span>
-        </th>
-        <th v-for="(item, index) in headerDays" :key='index'>
-          <span >{{item.days}}</span>
-        </th>
+        <th>日期</th>
+        <th colspan="31"><calendar></calendar></th>
       </tr>
+      <!--<tr>-->
+        <!--<td>-->
+          <!--<span >kk</span>-->
+        <!--</td>-->
+        <!--<td v-for="(item, index) in headerDays" :key='index'>-->
+          <!--<span >{{item.days}}</span>-->
+        <!--</td>-->
+      <!--</tr>-->
       <tr v-for="(item, index) in data" :key='index'>
         <td>
           <span>{{item.title}}</span>
@@ -28,11 +33,13 @@
       <p>{{remark}}</p>
       <div class="arrow"></div>
     </div>
+    <!--<calendar></calendar>-->
   </div>
 </template>
 
 <script>
 import { getDays } from './time.js'
+import calendar from './calendar/calendar.vue'
 export default {
   name: 'HelloWorld',
   data () {
@@ -247,6 +254,9 @@ export default {
         return true
       }
     }
+  },
+  components: {
+    calendar
   }
 }
 </script>
