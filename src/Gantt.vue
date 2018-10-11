@@ -6,7 +6,7 @@
     <table class="hello" >
       <tr>
         <th>日期</th>
-        <th colspan="31"><calendar></calendar></th>
+        <th colspan="31"><calendar @switchTos="switchTo"></calendar></th>
       </tr>
       <!--<tr>-->
         <!--<td>-->
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getDays } from './time.js'
+import { getDays,formats } from './time.js'
 import calendar from './calendar/calendar.vue'
 export default {
   name: 'HelloWorld',
@@ -54,16 +54,16 @@ export default {
       },
       {
         title: '项目二',
-        today: '2018-10-9',
-        endTime: '2018-10-16',
+        today: '2018-09-9',
+        endTime: '2018-09-16',
         activeColor: 'red',
         activeColors: 'green',
         remark: '这是项目二'
       },
       {
         title: '项目三',
-        today: '2018-10-15',
-        endTime: '2018-10-25',
+        today: '2018-09-15',
+        endTime: '2018-09-25',
         activeColor: 'red',
         activeColors: 'green',
         remark: '这是项目二'
@@ -229,16 +229,11 @@ export default {
     mouseleave (e) {
       this.isshow = false
     },
-    switchTo (e) {
+    switchTo (e) {  
       let arr = []
-      let month
-      if (e) {
-        month = new Date().getFullYear() + '-' + e
-      } else {
-        month = new Date().toJSON().slice(0, 7)
-      }
+      let month=new Date().toJSON().slice(0, 7)
       this.row.map(item => {
-        if (item.today.includes(month)) {
+        if (item.today.includes(e||month)) {
           arr.push(item)
         }
       })
@@ -253,6 +248,25 @@ export default {
       if (dt.getDay() === 6 || dt.getDay() === 0) {
         return true
       }
+    },
+   formats (format) {
+      var o = {
+        'M+': this.getMonth() + 1, // month
+        'd+': this.getDate(), // day
+        'h+': this.getHours(), // hour
+        'm+': this.getMinutes(), // minute
+        's+': this.getSeconds(), // second
+        'q+': Math.floor((this.getMonth() + 3) / 3), // quarter
+        'S': this.getMilliseconds() // millisecond
+      }
+      if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1,
+          (this.getFullYear() + '').substr(4 - RegExp.$1.length))
+      }
+      for (var k in o) {
+        if (new RegExp('(' + k + ')').test(format)) { format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)) }
+      }
+      return format
     }
   },
   components: {

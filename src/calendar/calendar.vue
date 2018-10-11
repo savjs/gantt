@@ -25,7 +25,7 @@
         </ul>
       </div> -->
       <div class="darkgrey content-list">
-        <ul class="days" v-html="refreshDate()"></ul>
+        <ul class="days"  v-html="refreshDate()" @click="mu"></ul>
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@ export default {
         } else {
           myClass = "class='darkgrey'"
         }
-        str += "<li " + myClass + ">" + i + "</li>"
+        str += "<li dataTo="+currentDay_date.getFullYear()+'-'+ 0+currentDay_date.getMonth()+" " + myClass + ">" + i + "</li>"
       }
       return str 
     },
@@ -90,6 +90,10 @@ export default {
       this.currentDay.currentDay_month++
       if (this.currentDay.currentDay_month > 11) this.currentDay.currentDay_year++ && (this.currentDay.currentDay_month = 0)
       this.refreshDate()
+    },
+    mu(e){
+     let date= e.target.getAttribute('dataTo')
+     this.$emit('switchTos',date)
     }
   },
   mounted () {
